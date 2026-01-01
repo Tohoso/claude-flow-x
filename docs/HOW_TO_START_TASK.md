@@ -38,8 +38,7 @@
 
 ブランチ運用ルール: docs/BRANCH_RULES.md
 
-また、移植元のコードは以下にあります:
-/home/ubuntu/claude-code-action/
+再利用コードは `_upstream/claude-code-action/` ディレクトリにあります。
 ```
 
 ### CC-3（Swarm Layer）への指示
@@ -58,8 +57,7 @@
 
 ブランチ運用ルール: docs/BRANCH_RULES.md
 
-また、移植元のコードは以下にあります:
-/home/ubuntu/claude-flow/
+再利用コードは `_upstream/claude-flow/` ディレクトリにあります。
 ```
 
 ### CC-4（Mobile Bridge Layer）への指示
@@ -78,8 +76,7 @@
 
 ブランチ運用ルール: docs/BRANCH_RULES.md
 
-また、移植元のコードは以下にあります:
-/home/ubuntu/remote-cursor/src/server/
+再利用コードは `_upstream/remote-cursor/server/` ディレクトリにあります。
 ```
 
 ### CC-5（Mobile App Layer）への指示
@@ -98,8 +95,7 @@
 
 ブランチ運用ルール: docs/BRANCH_RULES.md
 
-また、移植元のコードは以下にあります:
-/home/ubuntu/remote-cursor/src/mobile/
+再利用コードは `_upstream/remote-cursor/mobile/` ディレクトリにあります。
 ```
 
 ---

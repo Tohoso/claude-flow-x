@@ -1,7 +1,7 @@
 # CC-2 Phase 1 タスク指示書
 
 > **重要**: このタスクでは既存のClaude Code GitHub Actionsコードを最大限再利用します。
-> 再利用元: `/home/ubuntu/claude-code-action/` (anthropics/claude-code-action)
+> 再利用元: `_upstream/claude-code-action/` (anthropics/claude-code-action)
 
 ## 担当者情報
 
@@ -120,41 +120,41 @@ export function setupActions() {
 ```bash
 # APIレイヤー
 mkdir -p packages/github/src/api
-cp -r /home/ubuntu/claude-code-action/src/github/api/* packages/github/src/api/
+cp -r _upstream/claude-code-action/src/github/api/* packages/github/src/api/
 
 # Operations
 mkdir -p packages/github/src/operations
-cp -r /home/ubuntu/claude-code-action/src/github/operations/* packages/github/src/operations/
+cp -r _upstream/claude-code-action/src/github/operations/* packages/github/src/operations/
 
 # Validation
 mkdir -p packages/github/src/validation
-cp -r /home/ubuntu/claude-code-action/src/github/validation/* packages/github/src/validation/
+cp -r _upstream/claude-code-action/src/github/validation/* packages/github/src/validation/
 
 # Data
 mkdir -p packages/github/src/data
-cp -r /home/ubuntu/claude-code-action/src/github/data/* packages/github/src/data/
+cp -r _upstream/claude-code-action/src/github/data/* packages/github/src/data/
 
 # Modes
 mkdir -p packages/github/src/modes
-cp -r /home/ubuntu/claude-code-action/src/modes/* packages/github/src/modes/
+cp -r _upstream/claude-code-action/src/modes/* packages/github/src/modes/
 
 # MCP
 mkdir -p packages/github/src/mcp
-cp -r /home/ubuntu/claude-code-action/src/mcp/* packages/github/src/mcp/
+cp -r _upstream/claude-code-action/src/mcp/* packages/github/src/mcp/
 
 # Utils
 mkdir -p packages/github/src/utils
-cp -r /home/ubuntu/claude-code-action/src/github/utils/* packages/github/src/utils/
-cp /home/ubuntu/claude-code-action/src/utils/retry.ts packages/github/src/utils/
+cp -r _upstream/claude-code-action/src/github/utils/* packages/github/src/utils/
+cp _upstream/claude-code-action/src/utils/retry.ts packages/github/src/utils/
 
 # Types and Constants
-cp /home/ubuntu/claude-code-action/src/github/types.ts packages/github/src/types.ts
-cp /home/ubuntu/claude-code-action/src/github/constants.ts packages/github/src/constants.ts
-cp /home/ubuntu/claude-code-action/src/github/context.ts packages/github/src/context.ts
-cp /home/ubuntu/claude-code-action/src/github/token.ts packages/github/src/token.ts
+cp _upstream/claude-code-action/src/github/types.ts packages/github/src/types.ts
+cp _upstream/claude-code-action/src/github/constants.ts packages/github/src/constants.ts
+cp _upstream/claude-code-action/src/github/context.ts packages/github/src/context.ts
+cp _upstream/claude-code-action/src/github/token.ts packages/github/src/token.ts
 
 # action.yml
-cp /home/ubuntu/claude-code-action/action.yml .
+cp _upstream/claude-code-action/action.yml .
 ```
 
 2. importパスを更新（相対パスに変更）
@@ -179,7 +179,7 @@ packages/github/
 ```
 
 4. 元の作業内容（分析）:
-   Claude Code GitHub Actions（`/home/ubuntu/claude-code-action/`）のコードを分析
+   Claude Code GitHub Actions（`_upstream/claude-code-action/`）のコードを分析
 
 2. 移植対象の機能を特定
    - `src/triggers/`: メンショントリガー

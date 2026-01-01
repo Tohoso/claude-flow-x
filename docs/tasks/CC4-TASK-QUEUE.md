@@ -72,9 +72,30 @@ cp _upstream/remote-cursor/server/services/progressParser.ts packages/mobile-bri
 cp _upstream/remote-cursor/server/services/fileWatcher.ts packages/mobile-bridge/src/services/fileWatcher.ts
 cp _upstream/remote-cursor/server/services/pushNotificationService.ts packages/mobile-bridge/src/services/pushNotificationService.ts
 
-# Types
+# Types (型定義は必要に応じて作成)
 mkdir -p packages/mobile-bridge/src/types
-cp _upstream/remote-cursor/common/types/index.ts packages/mobile-bridge/src/types/index.ts
+# 型定義はサーバーコードから抽出して作成する
+cat > packages/mobile-bridge/src/types/index.ts << 'EOF'
+// Mobile Bridge types
+export interface ProjectStatus {
+  id: string;
+  name: string;
+  status: 'active' | 'idle' | 'error';
+  progress: number;
+}
+
+export interface TaskUpdate {
+  taskId: string;
+  status: 'started' | 'completed' | 'failed';
+  progress?: number;
+}
+
+export interface BlockerAlert {
+  id: string;
+  message: string;
+  severity: 'low' | 'medium' | 'high';
+}
+EOF
 ```
 
 4. packages/mobile-bridge/tsup.config.tsを作成

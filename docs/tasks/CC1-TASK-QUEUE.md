@@ -35,7 +35,77 @@ EOF
 mkdir -p packages/{core,shared,github,swarm,mobile-bridge,mobile-app}
 ```
 
-3. ルートpackage.jsonを更新
+3. packages/shared/package.jsonを作成（共有型定義用）
+```bash
+mkdir -p packages/shared/src/types
+cat > packages/shared/package.json << 'EOF'
+{
+  "name": "@claude-flow-x/shared",
+  "version": "0.1.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "lint": "eslint src/"
+  },
+  "dependencies": {
+    "zod": "^3.22.0"
+  }
+}
+EOF
+```
+
+4. packages/shared/src/index.tsを作成
+```bash
+cat > packages/shared/src/index.ts << 'EOF'
+// Shared types and utilities
+export * from './types';
+EOF
+
+cat > packages/shared/src/types/index.ts << 'EOF'
+// Common types used across packages
+export interface Project {
+  id: string;
+  name: string;
+  status: 'active' | 'idle' | 'error';
+}
+
+export interface Agent {
+  id: string;
+  type: string;
+  status: 'running' | 'idle' | 'terminated';
+}
+
+export interface Task {
+  id: string;
+  name: string;
+  status: 'pending' | 'running' | 'completed' | 'failed';
+  progress: number;
+}
+EOF
+```
+
+5. packages/shared/tsup.config.tsを作成
+```bash
+cat > packages/shared/tsup.config.ts << 'EOF'
+import { defineConfig } from 'tsup';
+
+export default defineConfig({
+  entry: ['src/index.ts'],
+  format: ['cjs', 'esm'],
+  dts: true,
+  clean: true,
+});
+EOF
+```
+
+6. ルートpackage.jsonを更新
 ```json
 {
   "name": "claude-flow-x",
@@ -54,7 +124,7 @@ mkdir -p packages/{core,shared,github,swarm,mobile-bridge,mobile-app}
 }
 ```
 
-4. 共通tsconfig.jsonを作成
+7. 共通tsconfig.jsonを作成
 ```bash
 cat > tsconfig.base.json << 'EOF'
 {
@@ -74,9 +144,9 @@ cat > tsconfig.base.json << 'EOF'
 EOF
 ```
 
-5. progress.mdを更新（TASK-001を「🟡 In Progress」→「✅ Done」）
+8. progress.mdを更新（TASK-001を「🟡 In Progress」→「✅ Done」）
 
-6. PRを作成
+9. PRを作成
 ```bash
 git checkout develop
 git pull origin develop
@@ -87,19 +157,24 @@ git push origin feature/core/task-001-monorepo-setup
 gh pr create --base develop --title "feat(core): Setup monorepo structure (TASK-001)" --body "## 変更内容
 - pnpm-workspace.yaml を作成
 - packages/ ディレクトリを作成
+- packages/shared/ を初期化
 - tsconfig.base.json を作成
 - ルート package.json を更新
 
 ## 完了条件
 - [x] pnpm-workspace.yaml が存在する
 - [x] packages/ ディレクトリが存在する
-- [x] pnpm install が成功する"
+- [x] packages/shared/ が初期化されている
+- [x] pnpm install が成功する
+- [x] pnpm build が成功する（packages/shared）"
 ```
 
 **完了条件**:
 - [ ] `pnpm-workspace.yaml`が存在する
 - [ ] `packages/`ディレクトリが存在する
+- [ ] `packages/shared/`が初期化されている
 - [ ] `pnpm install`が成功する
+- [ ] `pnpm build`が成功する（packages/shared）
 
 ---
 
@@ -143,6 +218,7 @@ cp _upstream/claude-flow/core/event-bus.ts packages/core/src/event-bus.ts
     "lint": "eslint src/"
   },
   "dependencies": {
+    "@claude-flow-x/shared": "workspace:*",
     "zod": "^3.22.0"
   }
 }
@@ -206,6 +282,7 @@ pnpm add zustand
 ```typescript
 import { create } from 'zustand';
 import { eventBus } from './event-bus';
+import type { Project, Agent, Task } from '@claude-flow-x/shared';
 
 interface AppState {
   // 状態定義
@@ -227,8 +304,8 @@ export const useAppStore = create<AppState>((set, get) => ({
   updateProject: (id, data) => {
     set((state) => {
       const projects = new Map(state.projects);
-      const existing = projects.get(id) || {};
-      projects.set(id, { ...existing, ...data });
+      const existing = projects.get(id) || {} as Project;
+      projects.set(id, { ...existing, ...data } as Project);
       return { projects };
     });
     eventBus.emit('state:project_updated', { id, data });
@@ -288,7 +365,6 @@ pnpm add cosmiconfig zod
 
 ### TASK-005: Loggerの実装
 
-
 **前提条件**: TASK-004がマージされていること
 
 **ブランチ**: `feature/core/task-005-logger`
@@ -298,7 +374,7 @@ pnpm add cosmiconfig zod
 1. developを最新に更新
 2. 既存コードをコピー（リポジトリ内の_upstreamから）
 ```bash
-cp _upstream/claude-flow/core/Logger.ts packages/core/src/logger.ts
+cp _upstream/claude-flow/core/logger.ts packages/core/src/logger.ts
 ```
 
 3. Event Busと連携するように修正

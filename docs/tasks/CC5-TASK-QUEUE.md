@@ -123,8 +123,7 @@ mkdir -p stores
 cp ../../_upstream/remote-cursor/mobile/stores/*.ts stores/
 
 # Theme
-mkdir -p theme
-cp ../../_upstream/remote-cursor/mobile/theme/*.ts theme/
+cp ../../_upstream/remote-cursor/mobile/theme.ts theme.ts
 
 # Navigation
 mkdir -p app/navigation
