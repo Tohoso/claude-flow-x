@@ -60,21 +60,21 @@ cat > packages/mobile-bridge/package.json << 'EOF'
 EOF
 ```
 
-3. 既存コードを一括コピー
+3. 既存コードを一括コピー（リポジトリ内の_upstreamから）
 ```bash
 # WebSocket
 mkdir -p packages/mobile-bridge/src/websocket
-cp /home/ubuntu/remote-cursor/src/server/src/websocket/index.ts packages/mobile-bridge/src/websocket/index.ts
+cp _upstream/remote-cursor/server/websocket/index.ts packages/mobile-bridge/src/websocket/index.ts
 
 # Services
 mkdir -p packages/mobile-bridge/src/services
-cp /home/ubuntu/remote-cursor/src/server/src/services/progressParser.ts packages/mobile-bridge/src/services/progressParser.ts
-cp /home/ubuntu/remote-cursor/src/server/src/services/fileWatcher.ts packages/mobile-bridge/src/services/fileWatcher.ts
-cp /home/ubuntu/remote-cursor/src/server/src/services/pushNotificationService.ts packages/mobile-bridge/src/services/pushNotificationService.ts
+cp _upstream/remote-cursor/server/services/progressParser.ts packages/mobile-bridge/src/services/progressParser.ts
+cp _upstream/remote-cursor/server/services/fileWatcher.ts packages/mobile-bridge/src/services/fileWatcher.ts
+cp _upstream/remote-cursor/server/services/pushNotificationService.ts packages/mobile-bridge/src/services/pushNotificationService.ts
 
 # Types
 mkdir -p packages/mobile-bridge/src/types
-cp /home/ubuntu/remote-cursor/src/common/types/index.ts packages/mobile-bridge/src/types/index.ts
+cp _upstream/remote-cursor/common/types/index.ts packages/mobile-bridge/src/types/index.ts
 ```
 
 4. packages/mobile-bridge/tsup.config.tsを作成
@@ -269,3 +269,4 @@ httpServer.listen(PORT, () => {
 3. **`packages/mobile-bridge/`以外のディレクトリは編集しない**
 4. **各タスク完了後、PRを作成してManusのレビューを待つ**
 5. **前のタスクがマージされるまで次のタスクを開始しない**
+6. **再利用コードは`_upstream/`ディレクトリにあります**

@@ -1,7 +1,7 @@
 # CC-5 Phase 1 タスク指示書
 
 > **重要**: このタスクでは既存のRemote Cursorモバイルアプリコードを最大限再利用します。
-> 再利用元: `/home/ubuntu/remote-cursor/src/mobile/` (Remote Cursorモバイルアプリ)
+> 再利用元: `_upstream/remote-cursor/mobile/` (Remote Cursorモバイルアプリ)
 
 ## 担当者情報
 
@@ -132,42 +132,42 @@ export default function App() {
 ```bash
 # Screens
 mkdir -p packages/mobile-app/app/screens
-cp /home/ubuntu/remote-cursor/src/mobile/app/screens/*.tsx packages/mobile-app/app/screens/
+cp _upstream/remote-cursor/mobile/app/screens/*.tsx packages/mobile-app/app/screens/
 
 # Components - Dashboard
 mkdir -p packages/mobile-app/components/dashboard
-cp /home/ubuntu/remote-cursor/src/mobile/components/dashboard/*.tsx packages/mobile-app/components/dashboard/
+cp _upstream/remote-cursor/mobile/components/dashboard/*.tsx packages/mobile-app/components/dashboard/
 
 # Components - Track
 mkdir -p packages/mobile-app/components/track
-cp /home/ubuntu/remote-cursor/src/mobile/components/track/*.tsx packages/mobile-app/components/track/
+cp _upstream/remote-cursor/mobile/components/track/*.tsx packages/mobile-app/components/track/
 
 # Components - Blocker
 mkdir -p packages/mobile-app/components/blocker
-cp /home/ubuntu/remote-cursor/src/mobile/components/blocker/*.tsx packages/mobile-app/components/blocker/
+cp _upstream/remote-cursor/mobile/components/blocker/*.tsx packages/mobile-app/components/blocker/
 
 # Components - Activity
 mkdir -p packages/mobile-app/components/activity
-cp /home/ubuntu/remote-cursor/src/mobile/components/activity/*.tsx packages/mobile-app/components/activity/
+cp _upstream/remote-cursor/mobile/components/activity/*.tsx packages/mobile-app/components/activity/
 
 # Hooks
 mkdir -p packages/mobile-app/hooks
-cp /home/ubuntu/remote-cursor/src/mobile/hooks/*.ts packages/mobile-app/hooks/
+cp _upstream/remote-cursor/mobile/hooks/*.ts packages/mobile-app/hooks/
 
 # Stores
 mkdir -p packages/mobile-app/stores
-cp /home/ubuntu/remote-cursor/src/mobile/stores/*.ts packages/mobile-app/stores/
+cp _upstream/remote-cursor/mobile/stores/*.ts packages/mobile-app/stores/
 
 # Theme
 mkdir -p packages/mobile-app/theme
-cp /home/ubuntu/remote-cursor/src/mobile/theme/*.ts packages/mobile-app/theme/
+cp _upstream/remote-cursor/mobile/theme/*.ts packages/mobile-app/theme/
 
 # Navigation
 mkdir -p packages/mobile-app/app/navigation
-cp /home/ubuntu/remote-cursor/src/mobile/navigation/*.ts packages/mobile-app/app/navigation/
+cp _upstream/remote-cursor/mobile/navigation/*.ts packages/mobile-app/app/navigation/
 
 # App.tsx
-cp /home/ubuntu/remote-cursor/src/mobile/App.tsx packages/mobile-app/App.tsx
+cp _upstream/remote-cursor/mobile/App.tsx packages/mobile-app/App.tsx
 ```
 
 2. 移植後のディレクトリ構造
@@ -190,7 +190,7 @@ packages/mobile-app/
 3. importパスを更新（相対パスに変更）
 
 4. 元の作業内容（分析）:
-   Remote Cursor（`/home/ubuntu/remote-cursor/`）のUIコンポーネントを分析
+   Remote Cursor（`_upstream/remote-cursor/`）のUIコンポーネントを分析
 
 2. 移植対象のコンポーネントを特定
 ```markdown

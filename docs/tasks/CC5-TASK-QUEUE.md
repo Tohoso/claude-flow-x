@@ -90,48 +90,48 @@ git pull origin develop
 git checkout -b feature/mobile-app/task-041-ui-migration
 ```
 
-2. 既存コードを一括コピー
+2. 既存コードを一括コピー（リポジトリ内の_upstreamから）
 ```bash
 cd packages/mobile-app
 
 # Screens
 mkdir -p app/screens
-cp /home/ubuntu/remote-cursor/src/mobile/app/screens/*.tsx app/screens/
+cp ../../_upstream/remote-cursor/mobile/app/screens/*.tsx app/screens/
 
 # Components - Dashboard
 mkdir -p components/dashboard
-cp /home/ubuntu/remote-cursor/src/mobile/components/dashboard/*.tsx components/dashboard/
+cp ../../_upstream/remote-cursor/mobile/components/dashboard/*.tsx components/dashboard/
 
 # Components - Track
 mkdir -p components/track
-cp /home/ubuntu/remote-cursor/src/mobile/components/track/*.tsx components/track/
+cp ../../_upstream/remote-cursor/mobile/components/track/*.tsx components/track/
 
 # Components - Blocker
 mkdir -p components/blocker
-cp /home/ubuntu/remote-cursor/src/mobile/components/blocker/*.tsx components/blocker/
+cp ../../_upstream/remote-cursor/mobile/components/blocker/*.tsx components/blocker/
 
 # Components - Activity
 mkdir -p components/activity
-cp /home/ubuntu/remote-cursor/src/mobile/components/activity/*.tsx components/activity/
+cp ../../_upstream/remote-cursor/mobile/components/activity/*.tsx components/activity/
 
 # Hooks
 mkdir -p hooks
-cp /home/ubuntu/remote-cursor/src/mobile/hooks/*.ts hooks/
+cp ../../_upstream/remote-cursor/mobile/hooks/*.ts hooks/
 
 # Stores
 mkdir -p stores
-cp /home/ubuntu/remote-cursor/src/mobile/stores/*.ts stores/
+cp ../../_upstream/remote-cursor/mobile/stores/*.ts stores/
 
 # Theme
 mkdir -p theme
-cp /home/ubuntu/remote-cursor/src/mobile/theme/*.ts theme/
+cp ../../_upstream/remote-cursor/mobile/theme/*.ts theme/
 
 # Navigation
 mkdir -p app/navigation
-cp /home/ubuntu/remote-cursor/src/mobile/navigation/*.ts app/navigation/
+cp ../../_upstream/remote-cursor/mobile/navigation/*.ts app/navigation/
 
 # App.tsx
-cp /home/ubuntu/remote-cursor/src/mobile/App.tsx App.tsx
+cp ../../_upstream/remote-cursor/mobile/App.tsx App.tsx
 ```
 
 3. progress.mdを更新
@@ -278,3 +278,4 @@ components/github/
 3. **`packages/mobile-app/`以外のディレクトリは編集しない**
 4. **各タスク完了後、PRを作成してManusのレビューを待つ**
 5. **前のタスクがマージされるまで次のタスクを開始しない**
+6. **再利用コードは`_upstream/`ディレクトリにあります**

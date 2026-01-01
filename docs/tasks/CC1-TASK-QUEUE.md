@@ -21,7 +21,7 @@
 
 1. pnpmワークスペースを設定
 ```bash
-cd /home/ubuntu/claude-flow-x
+cd claude-flow-x
 
 # pnpm-workspace.yaml を作成
 cat > pnpm-workspace.yaml << 'EOF'
@@ -118,10 +118,10 @@ git pull origin develop
 git checkout -b feature/core/task-002-event-bus
 ```
 
-2. 既存コードをコピー
+2. 既存コードをコピー（リポジトリ内の_upstreamから）
 ```bash
 mkdir -p packages/core/src
-cp /home/ubuntu/claude-flow/src/core/event-bus.ts packages/core/src/event-bus.ts
+cp _upstream/claude-flow/core/event-bus.ts packages/core/src/event-bus.ts
 ```
 
 3. packages/core/package.jsonを作成
@@ -183,7 +183,6 @@ gh pr create --base develop --title "feat(core): Implement Event Bus (TASK-002)"
 ---
 
 ### TASK-003: State Managerの実装
-
 **前提条件**: TASK-002がマージされていること
 
 **ブランチ**: `feature/core/task-003-state-manager`
@@ -265,9 +264,9 @@ export * from './state-manager';
 **作業内容**:
 
 1. developを最新に更新
-2. 既存コードをコピー
+2. 既存コードをコピー（リポジトリ内の_upstreamから）
 ```bash
-cp /home/ubuntu/claude-flow/src/core/ConfigManager.ts packages/core/src/config-manager.ts
+cp _upstream/claude-flow/core/ConfigManager.ts packages/core/src/config-manager.ts
 ```
 
 3. cosmiconfigとzodをインストール
@@ -289,6 +288,7 @@ pnpm add cosmiconfig zod
 
 ### TASK-005: Loggerの実装
 
+
 **前提条件**: TASK-004がマージされていること
 
 **ブランチ**: `feature/core/task-005-logger`
@@ -296,9 +296,9 @@ pnpm add cosmiconfig zod
 **作業内容**:
 
 1. developを最新に更新
-2. 既存コードをコピー
+2. 既存コードをコピー（リポジトリ内の_upstreamから）
 ```bash
-cp /home/ubuntu/claude-flow/src/core/Logger.ts packages/core/src/logger.ts
+cp _upstream/claude-flow/core/Logger.ts packages/core/src/logger.ts
 ```
 
 3. Event Busと連携するように修正
@@ -319,3 +319,4 @@ cp /home/ubuntu/claude-flow/src/core/Logger.ts packages/core/src/logger.ts
 3. **他のCCのディレクトリは編集しない**
 4. **各タスク完了後、PRを作成してManusのレビューを待つ**
 5. **前のタスクがマージされるまで次のタスクを開始しない**
+6. **再利用コードは`_upstream/`ディレクトリにあります**

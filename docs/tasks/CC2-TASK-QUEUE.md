@@ -97,7 +97,6 @@ gh pr create --base develop --title "feat(github): Initialize package (TASK-010)
 ---
 
 ### TASK-011: GitHub Actionsコード移植
-
 **前提条件**: TASK-010がマージされていること
 
 **ブランチ**: `feature/github/task-011-code-migration`
@@ -111,45 +110,42 @@ git pull origin develop
 git checkout -b feature/github/task-011-code-migration
 ```
 
-2. 既存コードを一括コピー
+2. 既存コードを一括コピー（リポジトリ内の_upstreamから）
 ```bash
 # APIレイヤー
 mkdir -p packages/github/src/api
-cp -r /home/ubuntu/claude-code-action/src/github/api/* packages/github/src/api/
+cp -r _upstream/claude-code-action/github/api/* packages/github/src/api/
 
 # Operations
 mkdir -p packages/github/src/operations
-cp -r /home/ubuntu/claude-code-action/src/github/operations/* packages/github/src/operations/
+cp -r _upstream/claude-code-action/github/operations/* packages/github/src/operations/
 
 # Validation
 mkdir -p packages/github/src/validation
-cp -r /home/ubuntu/claude-code-action/src/github/validation/* packages/github/src/validation/
+cp -r _upstream/claude-code-action/github/validation/* packages/github/src/validation/
 
 # Data
 mkdir -p packages/github/src/data
-cp -r /home/ubuntu/claude-code-action/src/github/data/* packages/github/src/data/
+cp -r _upstream/claude-code-action/github/data/* packages/github/src/data/
 
 # Modes
 mkdir -p packages/github/src/modes
-cp -r /home/ubuntu/claude-code-action/src/modes/* packages/github/src/modes/
+cp -r _upstream/claude-code-action/modes/* packages/github/src/modes/
 
 # MCP
 mkdir -p packages/github/src/mcp
-cp -r /home/ubuntu/claude-code-action/src/mcp/* packages/github/src/mcp/
+cp -r _upstream/claude-code-action/mcp/* packages/github/src/mcp/
 
 # Utils
 mkdir -p packages/github/src/utils
-cp -r /home/ubuntu/claude-code-action/src/github/utils/* packages/github/src/utils/
-cp /home/ubuntu/claude-code-action/src/utils/retry.ts packages/github/src/utils/
+cp -r _upstream/claude-code-action/github/utils/* packages/github/src/utils/
+cp _upstream/claude-code-action/utils/retry.ts packages/github/src/utils/
 
 # Types and Constants
-cp /home/ubuntu/claude-code-action/src/github/types.ts packages/github/src/types.ts
-cp /home/ubuntu/claude-code-action/src/github/constants.ts packages/github/src/constants.ts
-cp /home/ubuntu/claude-code-action/src/github/context.ts packages/github/src/context.ts
-cp /home/ubuntu/claude-code-action/src/github/token.ts packages/github/src/token.ts
-
-# action.yml
-cp /home/ubuntu/claude-code-action/action.yml .
+cp _upstream/claude-code-action/github/types.ts packages/github/src/types.ts
+cp _upstream/claude-code-action/github/constants.ts packages/github/src/constants.ts
+cp _upstream/claude-code-action/github/context.ts packages/github/src/context.ts
+cp _upstream/claude-code-action/github/token.ts packages/github/src/token.ts
 ```
 
 3. importパスを修正（相対パスに変更）
@@ -186,6 +182,7 @@ gh pr create --base develop --title "feat(github): Migrate GitHub Actions code (
 ---
 
 ### TASK-012: Event Bus統合
+
 
 **前提条件**: TASK-011がマージされていること、TASK-002（CC-1）がマージされていること
 
@@ -231,3 +228,4 @@ eventBus.emit('github:claude_mentioned', { ... });
 3. **`packages/github/`以外のディレクトリは編集しない**
 4. **各タスク完了後、PRを作成してManusのレビューを待つ**
 5. **前のタスクがマージされるまで次のタスクを開始しない**
+6. **再利用コードは`_upstream/`ディレクトリにあります**

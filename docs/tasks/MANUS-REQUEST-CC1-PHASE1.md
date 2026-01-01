@@ -1,7 +1,7 @@
 # CC-1 Phase 1 タスク指示書
 
 > **重要**: このタスクでは既存のClaude-Flowコードを最大限再利用します。
-> 再利用元: `/home/ubuntu/claude-flow/` (フォーク元リポジトリ)
+> 再利用元: `_upstream/claude-flow/` (フォーク元リポジトリ)
 
 ## 担当者情報
 
@@ -129,7 +129,7 @@ packages/shared/
 
 1. 既存ファイルをコピー
 ```bash
-cp /home/ubuntu/claude-flow/src/core/event-bus.ts packages/core/src/event-bus/index.ts
+cp _upstream/claude-flow/core/event-bus.ts packages/core/src/event-bus/index.ts
 ```
 
 2. 型定義を`@claude-flow-x/shared`に分離
@@ -379,7 +379,7 @@ export interface ProjectProgress {
 
 1. 既存ファイルをコピー
 ```bash
-cp /home/ubuntu/claude-flow/src/core/ConfigManager.ts packages/core/src/config/index.ts
+cp _upstream/claude-flow/core/ConfigManager.ts packages/core/src/config/index.ts
 ```
 
 2. Zodスキーマを追加して型安全性を強化
@@ -492,7 +492,7 @@ module.exports = {
 
 1. 既存ファイルをコピー
 ```bash
-cp /home/ubuntu/claude-flow/src/core/logger.ts packages/core/src/logger/index.ts
+cp _upstream/claude-flow/core/logger.ts packages/core/src/logger/index.ts
 ```
 
 2. 構造化ログ形式に拡張（JSON出力オプション追加）

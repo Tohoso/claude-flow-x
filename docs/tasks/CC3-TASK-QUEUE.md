@@ -56,41 +56,41 @@ cat > packages/swarm/package.json << 'EOF'
 EOF
 ```
 
-3. 既存コードを一括コピー
+3. 既存コードを一括コピー（リポジトリ内の_upstreamから）
 ```bash
 # Swarmコア
 mkdir -p packages/swarm/src/coordinator
-cp /home/ubuntu/claude-flow/src/swarm/coordinator.ts packages/swarm/src/coordinator/index.ts
+cp _upstream/claude-flow/swarm/coordinator.ts packages/swarm/src/coordinator/index.ts
 
 mkdir -p packages/swarm/src/executor
-cp /home/ubuntu/claude-flow/src/swarm/executor.ts packages/swarm/src/executor/index.ts
-cp /home/ubuntu/claude-flow/src/swarm/direct-executor.ts packages/swarm/src/executor/direct.ts
+cp _upstream/claude-flow/swarm/executor.ts packages/swarm/src/executor/index.ts
+cp _upstream/claude-flow/swarm/direct-executor.ts packages/swarm/src/executor/direct.ts
 
 mkdir -p packages/swarm/src/hive-mind
-cp /home/ubuntu/claude-flow/src/swarm/hive-mind-integration.ts packages/swarm/src/hive-mind/index.ts
+cp _upstream/claude-flow/swarm/hive-mind-integration.ts packages/swarm/src/hive-mind/index.ts
 
 mkdir -p packages/swarm/src/claude-code
-cp /home/ubuntu/claude-flow/src/swarm/claude-code-interface.ts packages/swarm/src/claude-code/index.ts
+cp _upstream/claude-flow/swarm/claude-code-interface.ts packages/swarm/src/claude-code/index.ts
 
 # Agent Registry
 mkdir -p packages/swarm/src/agents/definitions
-cp /home/ubuntu/claude-flow/src/core/AgentRegistry.ts packages/swarm/src/agents/registry.ts
-cp /home/ubuntu/claude-flow/src/agents/agent-manager.ts packages/swarm/src/agents/manager.ts
-cp /home/ubuntu/claude-flow/src/agents/agent-loader.ts packages/swarm/src/agents/loader.ts
-cp -r /home/ubuntu/claude-flow/src/cli/agents/* packages/swarm/src/agents/definitions/
+cp _upstream/claude-flow/core/AgentRegistry.ts packages/swarm/src/agents/registry.ts
+cp _upstream/claude-flow/agents/agent-manager.ts packages/swarm/src/agents/manager.ts
+cp _upstream/claude-flow/agents/agent-loader.ts packages/swarm/src/agents/loader.ts
+cp -r _upstream/claude-flow/cli/agents/* packages/swarm/src/agents/definitions/
 
 # Memory
 mkdir -p packages/swarm/src/memory
-cp /home/ubuntu/claude-flow/src/memory/manager.ts packages/swarm/src/memory/manager.ts
-cp /home/ubuntu/claude-flow/src/memory/swarm-memory.ts packages/swarm/src/memory/swarm.ts
-cp /home/ubuntu/claude-flow/src/memory/distributed-memory.ts packages/swarm/src/memory/distributed.ts
-cp /home/ubuntu/claude-flow/src/memory/cache.ts packages/swarm/src/memory/cache.ts
+cp _upstream/claude-flow/memory/manager.ts packages/swarm/src/memory/manager.ts
+cp _upstream/claude-flow/memory/swarm-memory.ts packages/swarm/src/memory/swarm.ts
+cp _upstream/claude-flow/memory/distributed-memory.ts packages/swarm/src/memory/distributed.ts
+cp _upstream/claude-flow/memory/cache.ts packages/swarm/src/memory/cache.ts
 
 # Monitoring
 mkdir -p packages/swarm/src/monitoring
-cp /home/ubuntu/claude-flow/src/monitoring/real-time-monitor.ts packages/swarm/src/monitoring/index.ts
-cp /home/ubuntu/claude-flow/src/monitoring/health-check.ts packages/swarm/src/monitoring/health.ts
-cp /home/ubuntu/claude-flow/src/monitoring/diagnostics.ts packages/swarm/src/monitoring/diagnostics.ts
+cp _upstream/claude-flow/monitoring/real-time-monitor.ts packages/swarm/src/monitoring/index.ts
+cp _upstream/claude-flow/monitoring/health-check.ts packages/swarm/src/monitoring/health.ts
+cp _upstream/claude-flow/monitoring/diagnostics.ts packages/swarm/src/monitoring/diagnostics.ts
 ```
 
 4. packages/swarm/tsup.config.tsを作成
@@ -217,3 +217,4 @@ eventBus.emit('swarm:blocker_resolved', { ... });
 3. **`packages/swarm/`以外のディレクトリは編集しない**
 4. **各タスク完了後、PRを作成してManusのレビューを待つ**
 5. **前のタスクがマージされるまで次のタスクを開始しない**
+6. **再利用コードは`_upstream/`ディレクトリにあります**
