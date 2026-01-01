@@ -1,5 +1,8 @@
 # CC-4 Phase 1 タスク指示書
 
+> **重要**: このタスクでは既存のRemote Cursorコードを最大限再利用します。
+> 再利用元: `/home/ubuntu/remote-cursor/src/server/` (Remote Cursorサーバー)
+
 ## 担当者情報
 
 | 項目 | 値 |
@@ -107,15 +110,49 @@ export function createProgressParser() {
 
 ---
 
-### TASK-031: WebSocket設計
+### TASK-031: WebSocketコード移植
 
-**目的**: WebSocket Serverの詳細設計を行う
+**目的**: Remote CursorのWebSocket実装を移植する
 
-**前提条件**: TASK-002（Event Bus）が完了していること
+**再利用元**: `remote-cursor/src/server/src/`
 
 **作業内容**:
 
-1. Remote Cursor（`/home/ubuntu/remote-cursor/`）のWebSocket実装を分析
+1. 既存ファイルを一括コピー
+```bash
+# WebSocket
+mkdir -p packages/mobile-bridge/src/websocket
+cp /home/ubuntu/remote-cursor/src/server/src/websocket/index.ts packages/mobile-bridge/src/websocket/index.ts
+
+# Services
+mkdir -p packages/mobile-bridge/src/push
+cp /home/ubuntu/remote-cursor/src/server/src/services/pushNotificationService.ts packages/mobile-bridge/src/push/index.ts
+
+mkdir -p packages/mobile-bridge/src/progress
+cp /home/ubuntu/remote-cursor/src/server/src/services/progressParser.ts packages/mobile-bridge/src/progress/parser.ts
+cp /home/ubuntu/remote-cursor/src/server/src/services/fileWatcher.ts packages/mobile-bridge/src/progress/watcher.ts
+
+# Types
+mkdir -p packages/mobile-bridge/src/types
+cp /home/ubuntu/remote-cursor/src/server/src/types/index.ts packages/mobile-bridge/src/types/index.ts
+```
+
+2. 移植後のディレクトリ構造
+```
+packages/mobile-bridge/
+├── src/
+│   ├── websocket/     # ← remote-cursor/src/server/src/websocket/
+│   ├── push/          # ← remote-cursor/src/server/src/services/pushNotificationService.ts
+│   ├── progress/      # ← remote-cursor/src/server/src/services/progressParser.ts + fileWatcher.ts
+│   ├── types/         # ← remote-cursor/src/server/src/types/
+│   └── index.ts
+└── package.json
+```
+
+3. Event Bus統合のための変更点を特定
+
+4. 元の作業内容（設計）:
+   Remote Cursor（`/home/ubuntu/remote-cursor/`）のWebSocket実装を分析析
 
 2. WebSocket設計書を作成
 ```markdown

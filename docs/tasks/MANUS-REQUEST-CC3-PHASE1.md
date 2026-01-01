@@ -1,5 +1,8 @@
 # CC-3 Phase 1 タスク指示書
 
+> **重要**: このタスクでは既存のClaude-Flowコードを最大限再利用します。
+> 再利用元: `/home/ubuntu/claude-flow/` (フォーク元リポジトリ)
+
 ## 担当者情報
 
 | 項目 | 値 |
@@ -19,13 +22,65 @@ CC-3は、Swarm Layerを担当します。既存のClaude-Flowのコードを整
 
 ## タスク一覧
 
-### TASK-020: 既存コードの整理
+### TASK-020: 既存コードの移植
 
-**目的**: Claude-Flowの既存コードを分析し、Swarm Layerとして切り出す部分を特定する
+**目的**: Claude-Flowの既存コードをSwarm Layerに移植する
+
+**再利用元**: `claude-flow/src/swarm/`, `claude-flow/src/memory/`, `claude-flow/src/monitoring/`
 
 **作業内容**:
 
-1. Claude-Flow（`/home/ubuntu/claude-flow/`）のコードを分析
+1. 既存ファイルを一括コピー
+```bash
+# Swarmコア
+mkdir -p packages/swarm/src/coordinator
+cp /home/ubuntu/claude-flow/src/swarm/coordinator.ts packages/swarm/src/coordinator/index.ts
+cp /home/ubuntu/claude-flow/src/swarm/executor.ts packages/swarm/src/executor/index.ts
+cp /home/ubuntu/claude-flow/src/swarm/direct-executor.ts packages/swarm/src/executor/direct.ts
+cp /home/ubuntu/claude-flow/src/swarm/hive-mind-integration.ts packages/swarm/src/hive-mind/index.ts
+cp /home/ubuntu/claude-flow/src/swarm/claude-code-interface.ts packages/swarm/src/claude-code/index.ts
+
+# Agent Registry
+mkdir -p packages/swarm/src/agents
+cp /home/ubuntu/claude-flow/src/core/AgentRegistry.ts packages/swarm/src/agents/registry.ts
+cp /home/ubuntu/claude-flow/src/agents/agent-manager.ts packages/swarm/src/agents/manager.ts
+cp /home/ubuntu/claude-flow/src/agents/agent-loader.ts packages/swarm/src/agents/loader.ts
+cp -r /home/ubuntu/claude-flow/src/cli/agents/* packages/swarm/src/agents/definitions/
+
+# Memory
+mkdir -p packages/swarm/src/memory
+cp /home/ubuntu/claude-flow/src/memory/manager.ts packages/swarm/src/memory/manager.ts
+cp /home/ubuntu/claude-flow/src/memory/swarm-memory.ts packages/swarm/src/memory/swarm.ts
+cp /home/ubuntu/claude-flow/src/memory/distributed-memory.ts packages/swarm/src/memory/distributed.ts
+cp /home/ubuntu/claude-flow/src/memory/cache.ts packages/swarm/src/memory/cache.ts
+
+# Monitoring
+mkdir -p packages/swarm/src/monitoring
+cp /home/ubuntu/claude-flow/src/monitoring/real-time-monitor.ts packages/swarm/src/monitoring/index.ts
+cp /home/ubuntu/claude-flow/src/monitoring/health-check.ts packages/swarm/src/monitoring/health.ts
+cp /home/ubuntu/claude-flow/src/monitoring/diagnostics.ts packages/swarm/src/monitoring/diagnostics.ts
+```
+
+2. 移植後のディレクトリ構造
+```
+packages/swarm/
+├── src/
+│   ├── coordinator/   # ← claude-flow/src/swarm/coordinator.ts (95KB)
+│   ├── executor/      # ← claude-flow/src/swarm/executor.ts (29KB)
+│   ├── hive-mind/     # ← claude-flow/src/swarm/hive-mind-integration.ts (31KB)
+│   ├── claude-code/   # ← claude-flow/src/swarm/claude-code-interface.ts (37KB)
+│   ├── agents/        # ← claude-flow/src/core/AgentRegistry.ts + src/agents/
+│   │   ├── registry.ts
+│   │   ├── manager.ts
+│   │   ├── loader.ts
+│   │   └── definitions/  # 54種類のエージェント
+│   ├── memory/        # ← claude-flow/src/memory/
+│   └── monitoring/    # ← claude-flow/src/monitoring/
+└── package.json
+```
+
+3. 元の作業内容（分析）:
+   Claude-Flow（`/home/ubuntu/claude-flow/`）のコードを分析
 
 2. Swarm Layer として切り出す機能を特定
    - `src/swarm/`: スウォーム管理

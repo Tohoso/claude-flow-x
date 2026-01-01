@@ -1,5 +1,8 @@
 # CC-2 Phase 1 タスク指示書
 
+> **重要**: このタスクでは既存のClaude Code GitHub Actionsコードを最大限再利用します。
+> 再利用元: `/home/ubuntu/claude-code-action/` (anthropics/claude-code-action)
+
 ## 担当者情報
 
 | 項目 | 値 |
@@ -105,13 +108,78 @@ export function setupActions() {
 
 ---
 
-### TASK-011: GitHub Actions移植計画
+#### TASK-011: GitHub Actionsコード移植
 
-**目的**: Claude Code GitHub Actionsから移植する機能を分析し、計画を作成する
+**目的**: Claude Code GitHub Actionsからコードを移植する
+
+**再利用元**: `claude-code-action/src/` 以下の全ファイル
 
 **作業内容**:
 
-1. Claude Code GitHub Actions（`/home/ubuntu/claude-code-action/`）のコードを分析
+1. 既存ファイルを一括コピー
+```bash
+# APIレイヤー
+mkdir -p packages/github/src/api
+cp -r /home/ubuntu/claude-code-action/src/github/api/* packages/github/src/api/
+
+# Operations
+mkdir -p packages/github/src/operations
+cp -r /home/ubuntu/claude-code-action/src/github/operations/* packages/github/src/operations/
+
+# Validation
+mkdir -p packages/github/src/validation
+cp -r /home/ubuntu/claude-code-action/src/github/validation/* packages/github/src/validation/
+
+# Data
+mkdir -p packages/github/src/data
+cp -r /home/ubuntu/claude-code-action/src/github/data/* packages/github/src/data/
+
+# Modes
+mkdir -p packages/github/src/modes
+cp -r /home/ubuntu/claude-code-action/src/modes/* packages/github/src/modes/
+
+# MCP
+mkdir -p packages/github/src/mcp
+cp -r /home/ubuntu/claude-code-action/src/mcp/* packages/github/src/mcp/
+
+# Utils
+mkdir -p packages/github/src/utils
+cp -r /home/ubuntu/claude-code-action/src/github/utils/* packages/github/src/utils/
+cp /home/ubuntu/claude-code-action/src/utils/retry.ts packages/github/src/utils/
+
+# Types and Constants
+cp /home/ubuntu/claude-code-action/src/github/types.ts packages/github/src/types.ts
+cp /home/ubuntu/claude-code-action/src/github/constants.ts packages/github/src/constants.ts
+cp /home/ubuntu/claude-code-action/src/github/context.ts packages/github/src/context.ts
+cp /home/ubuntu/claude-code-action/src/github/token.ts packages/github/src/token.ts
+
+# action.yml
+cp /home/ubuntu/claude-code-action/action.yml .
+```
+
+2. importパスを更新（相対パスに変更）
+
+3. 移植後のディレクトリ構造
+```
+packages/github/
+├── src/
+│   ├── api/           # ← claude-code-action/src/github/api/
+│   ├── operations/    # ← claude-code-action/src/github/operations/
+│   ├── validation/    # ← claude-code-action/src/github/validation/
+│   ├── data/          # ← claude-code-action/src/github/data/
+│   ├── modes/         # ← claude-code-action/src/modes/
+│   ├── mcp/           # ← claude-code-action/src/mcp/
+│   ├── utils/         # ← claude-code-action/src/github/utils/ + src/utils/
+│   ├── types.ts       # ← claude-code-action/src/github/types.ts
+│   ├── constants.ts   # ← claude-code-action/src/github/constants.ts
+│   ├── context.ts     # ← claude-code-action/src/github/context.ts
+│   ├── token.ts       # ← claude-code-action/src/github/token.ts
+│   └── index.ts
+└── package.json
+```
+
+4. 元の作業内容（分析）:
+   Claude Code GitHub Actions（`/home/ubuntu/claude-code-action/`）のコードを分析
 
 2. 移植対象の機能を特定
    - `src/triggers/`: メンショントリガー

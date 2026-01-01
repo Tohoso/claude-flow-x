@@ -1,5 +1,8 @@
 # CC-1 Phase 1 タスク指示書
 
+> **重要**: このタスクでは既存のClaude-Flowコードを最大限再利用します。
+> 再利用元: `/home/ubuntu/claude-flow/` (フォーク元リポジトリ)
+
 ## 担当者情報
 
 | 項目 | 値 |
@@ -120,7 +123,16 @@ packages/shared/
 
 **目的**: 各レイヤー間の通信を担うEvent Busを実装する
 
+**再利用元**: `claude-flow/src/core/event-bus.ts` (4.5KB)
+
 **作業内容**:
+
+1. 既存ファイルをコピー
+```bash
+cp /home/ubuntu/claude-flow/src/core/event-bus.ts packages/core/src/event-bus/index.ts
+```
+
+2. 型定義を`@claude-flow-x/shared`に分離
 
 1. `packages/core/src/event-bus/index.ts`を作成
 ```typescript
@@ -361,7 +373,16 @@ export interface ProjectProgress {
 
 **目的**: cosmiconfigベースの階層的設定管理を実装する
 
+**再利用元**: `claude-flow/src/core/ConfigManager.ts` (8.5KB)
+
 **作業内容**:
+
+1. 既存ファイルをコピー
+```bash
+cp /home/ubuntu/claude-flow/src/core/ConfigManager.ts packages/core/src/config/index.ts
+```
+
+2. Zodスキーマを追加して型安全性を強化
 
 1. `packages/core/src/config/index.ts`を作成
 ```typescript
@@ -465,7 +486,16 @@ module.exports = {
 
 **目的**: 構造化ログを出力するLoggerを実装する
 
+**再利用元**: `claude-flow/src/core/logger.ts` (8.4KB)
+
 **作業内容**:
+
+1. 既存ファイルをコピー
+```bash
+cp /home/ubuntu/claude-flow/src/core/logger.ts packages/core/src/logger/index.ts
+```
+
+2. 構造化ログ形式に拡張（JSON出力オプション追加）
 
 1. `packages/core/src/logger/index.ts`を作成
 ```typescript
